@@ -1,0 +1,124 @@
+/* General Body Styling */
+body {
+    background-color: #1a1a1a;  /* Dark background for the whole page */
+    color: #fff;  /* White text color for all text */
+}
+
+/* Override bg-primary class with a purple gradient */
+.bg-primary {
+    background: linear-gradient(to right, #6a0dad, #9b30ff); /* Purple gradient */
+}
+
+/* Override text color for links or other elements */
+.text-white {
+    color: #fff !important; /* Keep text color white */
+}
+
+/* Override navbar and other button styles that use bg-primary */
+.navbar, .navbar-light .navbar-nav .nav-link, .btn-primary {
+    background: linear-gradient(to right, #6a0dad, #9b30ff) !important;
+    border-color: #9b30ff !important; /* Optional: Change border color */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff !important; /* Ensure text stays white in navbar */
+}
+
+.btn-primary:hover, .navbar-light .navbar-nav .nav-link:hover {
+    background: linear-gradient(to right, #9b30ff, #6a0dad) !important; /* Reverse the gradient on hover */
+}
+
+/* Override other Bootstrap elements */
+.card-header, .card-footer {
+    background: linear-gradient(to right, #6a0dad, #9b30ff) !important;
+    color: white !important;
+}
+
+/* Override table styles */
+.table, .table-bordered {
+    background-color: #1a1a1a !important;
+    color: #fff;  /* White text in tables */
+}
+
+.table th, .table td {
+    border-color: #444; /* Dark border for table cells */
+}
+
+/* Additional styling for buttons and links to maintain the white text on dark background */
+a, .nav-link, .btn, .btn-link {
+    color: #fff !important; /* White text on all links and buttons */
+}
+
+a:hover, .nav-link:hover, .btn:hover, .btn-link:hover {
+    color: #ddd !important; /* Light grey text on hover for links */
+}
+
+/* Style for input fields, text areas, and selects */
+input, textarea, select {
+    background: linear-gradient(to right, #d3d3d3, #b0b0b0); /* Lighter gray gradient */
+    color: #fff; /* White text */
+    border: 1px solid #9b30ff; /* Border to match the gradient */
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+/* Ensure white text inside text areas */
+textarea {
+    color: #fff !important; /* White text in text areas */
+}
+
+/* Hover effect for text areas and input fields */
+input:hover, textarea:hover, select:hover {
+    background: linear-gradient(to right, #b0b0b0, #d3d3d3); /* Reverse the gradient on hover */
+}
+
+/* Focus effect for text areas and input fields */
+input:focus, textarea:focus, select:focus {
+    background: linear-gradient(to right, #b0b0b0, #d3d3d3); /* Reverse the gradient on hover */
+    border-color: #6a0dad !important; /* Darker border when focused */
+    outline: none !important;
+}
+
+/* Key Features Section Fixes */
+.features .card {
+    background-color: #444;  /* Dark card background */
+    border: none; /* Remove border to match the dark theme */
+    color: #fff; /* White text for the cards */
+}
+
+/* Card hover effect */
+.features .card:hover {
+    background-color: #555; /* Slightly lighter background on hover */
+}
+
+/* Section title and text */
+.features h2, .features p {
+    color: #fff; /* Ensure text is white */
+}
+
+/* Override bg-light class with a darker background and text color */
+.bg-light {
+    background-color: #2c2c2c !important; /* Darker background */
+}
+
+/* Ensure the text color is visible */
+.bg-light .text-center, .bg-light .card-title, .bg-light .card-text {
+    color: #fff !important; /* White text color */
+}
+
+/* Style for navbar and buttons that use bg-primary */
+.navbar, .navbar-light .navbar-nav .nav-link, .btn-primary {
+    background: linear-gradient(to right, #6a0dad, #9b30ff) !important;
+    border-color: #9b30ff !important; /* Optional: Change border color */
+}
+
+/* Navbar hover effect */
+.navbar-light .navbar-nav .nav-link:hover {
+    background: linear-gradient(to right, #9b30ff, #6a0dad) !important; /* Reverse the gradient on hover */
+}
+
+/* Card header and footer background for dark theme */
+.card-header, .card-footer {
+    background: linear-gradient(to right, #6a0dad, #9b30ff) !important;
+    color: white !important;
+}
