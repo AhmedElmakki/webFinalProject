@@ -6,6 +6,7 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 include('header.php');
+
 // Database connection
 $servername = "localhost";
 $username = "root";
@@ -20,7 +21,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle student registration and removal
+// Handle student registration, removal, and update
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['StudentName']) && isset($_POST['studentId'])) {
         // Student registration logic
@@ -61,6 +62,62 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         $stmt->close();
     }
+
+    if (isset($_POST['updateStudentId'])) {
+        // Update student info logic
+        $update_student_id = $_POST['updateStudentId'];
+        $update_name = $_POST['updateStudentName'];
+        $update_gpa = $_POST['updateGPA'];
+        $update_credit_hours = $_POST['updateCreditHours'];
+        $update_age = $_POST['updateAge'];
+
+        // Build dynamic SQL query for updating fields
+        $fields = [];
+        $params = [];
+        $types = "";
+
+        if (!empty($update_name)) {
+            $fields[] = "student_name = ?";
+            $params[] = $update_name;
+            $types .= "s";
+        }
+        if (!empty($update_gpa)) {
+            $fields[] = "gpa = ?";
+            $params[] = $update_gpa;
+            $types .= "d";
+        }
+        if (!empty($update_credit_hours)) {
+            $fields[] = "credit_hours = ?";
+            $params[] = $update_credit_hours;
+            $types .= "i";
+        }
+        if (!empty($update_age)) {
+            $fields[] = "age = ?";
+            $params[] = $update_age;
+            $types .= "i";
+        }
+
+        if (!empty($fields)) {
+            $sql = "UPDATE students SET " . implode(", ", $fields) . " WHERE student_id = ?";
+            $params[] = $update_student_id;
+            $types .= "i";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param($types, ...$params);
+            if ($stmt->execute()) {
+                if ($stmt->affected_rows > 0) {
+                    echo "<div class='alert alert-success'>Student information updated successfully.</div>";
+                } else {
+                    echo "<div class='alert alert-warning'>No changes were made or student not found.</div>";
+                }
+            } else {
+                echo "<div class='alert alert-danger'>Error: " . $stmt->error . "</div>";
+            }
+            $stmt->close();
+        } else {
+            echo "<div class='alert alert-warning'>No fields were provided to update.</div>";
+        }
+    }
 }
 
 $conn->close();
@@ -71,7 +128,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register or Remove Students</title>
+    <title>Register, Remove, or Update Students</title>
     <!-- Link to Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="custom.css" rel="stylesheet">
@@ -140,6 +197,40 @@ $conn->close();
                     </form>
                 </section>
             </div>
+
+            <!-- Update Student Info Section -->
+            <section class="col-md-12 update-student py-5">
+                <h2 class="text-center mb-4">Update Student Information</h2>
+                <p class="text-center mb-4">Enter the student ID and the fields you want to update.</p>
+                <form action="student-registration.php" method="post">
+                    <div class="form-group">
+                        <label for="updateStudentId">Student ID</label>
+                        <input type="number" class="form-control" id="updateStudentId" name="updateStudentId" required placeholder="Enter Student ID">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateStudentName">Student Name</label>
+                        <input type="text" class="form-control" id="updateStudentName" name="updateStudentName" placeholder="Enter New Student Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateGPA">Student GPA</label>
+                        <input type="number" class="form-control" id="updateGPA" name="updateGPA" placeholder="Enter New GPA" min="0.0" max="4.0" step="0.1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateCreditHours">Student Credit Hours</label>
+                        <input type="number" class="form-control" id="updateCreditHours" name="updateCreditHours" placeholder="Enter New Credit Hours" step="1" min="0" max="144">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateAge">Student Age</label>
+                        <input type="number" class="form-control" id="updateAge" name="updateAge" placeholder="Enter New Age" min="18">
+                    </div>
+
+                    <button type="submit" class="btn btn-warning btn-block">Update Student</button>
+                </form>
+            </section>
         </div>
     </main>
 
